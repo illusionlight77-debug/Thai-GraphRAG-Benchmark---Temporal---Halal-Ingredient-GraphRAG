@@ -1,0 +1,91 @@
+ingredient_th,ingredient_en,aliases,e_number,source_th,source_en,source_type,ruling,basis_th,note_th
+เจลาติน,Gelatin,gelatine|เจลาทีน|เยลาติน,E441,สุกร,Pork,animal_prohibited,haram,"สุกรและอนุพันธ์เป็นสิ่งต้องห้ามโดยตัวบท (อัลกุรอาน 2:173, 5:3)",เจลาตินจากหนังและกระดูกสุกรเป็นชนิดที่ใช้แพร่หลายที่สุดในอุตสาหกรรม
+เจลาติน,Gelatin,gelatine|เจลาทีน,E441,วัวเชือดตามหลักศาสนาอิสลาม,Halal-slaughtered cattle,animal_halal_slaughter,halal,สัตว์บกที่อนุมัติและเชือดถูกต้องตามหลักศาสนา อนุพันธ์จึงฮาลาล,ต้องมีใบรับรองการเชือดกำกับตลอดสายการผลิต
+เจลาติน,Gelatin,gelatine|เจลาทีน,E441,วัวไม่ระบุวิธีการเชือด,Cattle (slaughter unspecified),animal_unspecified,mashbooh,ไม่อาจยืนยันได้ว่าเชือดตามหลักศาสนาหรือไม่ จึงเป็นที่คลุมเครือ,ควรหลีกเลี่ยงจนกว่าจะตรวจสอบแหล่งที่มาได้
+เจลาติน,Gelatin,fish gelatin|เจลาตินปลา,E441,ปลา,Fish,aquatic,halal,สัตว์น้ำเป็นที่อนุมัติตามทัศนะมัซฮับชาฟิอีย์ซึ่งเป็นมัซฮับหลักในไทย,เจลาตินปลาเป็นทางเลือกฮาลาลที่พบมากในผลิตภัณฑ์เสริมอาหาร
+เจลาตินจากพืช,Plant-based gelatin,วุ้นทดแทนเจลาติน|agar gelatin,,สาหร่ายทะเล,Seaweed,plant,halal,พืชและสาหร่ายเป็นที่อนุมัติโดยหลักเดิม (อัลอัศล์ฟิลอัชยาอ์อัลอิบาหะฮ์),ทางเทคนิคเป็นวุ้น/คาร์ราจีแนน ไม่ใช่เจลาตินแท้
+เรนเนต,Rennet,rennin|เอนไซม์เรนเนต,,กระเพาะสุกร,Pig stomach,animal_prohibited,haram,อนุพันธ์จากสุกรเป็นสิ่งต้องห้าม,
+เรนเนต,Rennet,rennin,,ลูกวัวเชือดตามหลักศาสนาอิสลาม,Halal-slaughtered calf,animal_halal_slaughter,halal,เอนไซม์จากสัตว์อนุมัติที่เชือดถูกต้อง,
+เรนเนต,Rennet,rennin,,ลูกวัวไม่ระบุวิธีการเชือด,Calf (slaughter unspecified),animal_unspecified,mashbooh,ไม่ทราบวิธีการเชือดจึงคลุมเครือ,เรนเนตสัตว์ที่ขายทั่วไปมักไม่ระบุแหล่งที่มา
+เรนเนต,Rennet,microbial rennet|เรนเนตจุลินทรีย์,,จุลินทรีย์,Microbial,microbial,halal,ผลิตจากเชื้อราหรือแบคทีเรียที่ไม่ใช่สิ่งต้องห้าม,เป็นชนิดที่โรงงานฮาลาลนิยมใช้แทนเรนเนตสัตว์
+เอทานอล,Ethanol,แอลกอฮอล์|alcohol|เอทิลแอลกอฮอล์,,การหมักเพื่อผลิตสุรา,Alcoholic beverage fermentation,intoxicant,haram,ค็อมร์ (ของมึนเมา) เป็นสิ่งต้องห้ามโดยตัวบท (อัลกุรอาน 5:90),ครอบคลุมเหล้า เบียร์ ไวน์ และสิ่งที่สกัดจากสิ่งเหล่านั้น
+เอทานอล,Ethanol,แอลกอฮอล์|alcohol,,ตัวทำละลายในสารแต่งกลิ่น,Flavour carrier solvent,synthetic,mashbooh,มีทัศนะต่างกันระหว่างสำนักคิด บางมาตรฐานอนุญาตหากตกค้างน้อยมากและไม่ทำให้มึนเมา,ควรตรวจปริมาณแอลกอฮอล์ตกค้างตามเกณฑ์ของผู้ให้การรับรอง
+เอทานอล,Ethanol,industrial alcohol,,กระบวนการปิโตรเคมี,Petrochemical synthesis,mineral,mashbooh,ไม่ได้มาจากการหมักสุราแต่ยังเป็นสารมึนเมาโดยสภาพ,มาตรฐานส่วนใหญ่ห้ามใช้ในอาหารแม้ไม่ได้มาจากสุรา
+เอทานอล,Ethanol,natural ethanol,,เอทานอลที่เกิดเองในผลไม้สุก,Naturally occurring in ripe fruit,plant,halal,เกิดขึ้นเองตามธรรมชาติในปริมาณน้อยและไม่ได้ผลิตเพื่อให้มึนเมา,
+วานิลลาสกัด,Vanilla extract,vanilla essence|กลิ่นวานิลลา,,ตัวทำละลายในสารแต่งกลิ่น,Flavour carrier solvent,synthetic,mashbooh,วานิลลาสกัดมาตรฐานสากลต้องมีเอทานอลเป็นตัวทำละลายไม่ต่ำกว่า 35%,วานิลลินสังเคราะห์ที่ไม่ใช้แอลกอฮอล์เป็นทางเลือกฮาลาล
+วานิลลิน,Vanillin,vanillin synthetic|วานิลลินสังเคราะห์,,กระบวนการปิโตรเคมี,Petrochemical synthesis,mineral,halal,สารสังเคราะห์ที่ไม่มีส่วนประกอบต้องห้ามและไม่ใช่สารมึนเมา,
+โมโนและไดกลีเซอไรด์,Mono- and diglycerides,mono-diglyceride|อิมัลซิไฟเออร์,E471,น้ำมันพืช,Vegetable oil,plant,halal,ไขมันจากพืชเป็นที่อนุมัติ,
+โมโนและไดกลีเซอไรด์,Mono- and diglycerides,mono-diglyceride,E471,ไขมันสุกร,Pork fat,animal_prohibited,haram,อนุพันธ์จากสุกรเป็นสิ่งต้องห้าม,
+โมโนและไดกลีเซอไรด์,Mono- and diglycerides,mono-diglyceride,E471,ไขมันสัตว์ไม่ระบุชนิด,Animal fat (unspecified),animal_unspecified,mashbooh,ไม่ทราบชนิดสัตว์และวิธีการเชือด,E471 เป็นวัตถุเจือปนที่ต้องตรวจสอบแหล่งที่มาบ่อยที่สุด
+เลซิติน,Lecithin,soy lecithin|เลซิทิน,E322,ถั่วเหลือง,Soybean,plant,halal,พืชเป็นที่อนุมัติโดยหลักเดิม,เลซิตินถั่วเหลืองเป็นชนิดที่ใช้มากที่สุดในอุตสาหกรรม
+เลซิติน,Lecithin,egg lecithin,E322,ไข่,Egg,egg,halal,ไข่จากสัตว์ปีกที่อนุมัติเป็นที่อนุมัติ,
+เลซิติน,Lecithin,lecithin,E322,ไขมันสัตว์ไม่ระบุชนิด,Animal fat (unspecified),animal_unspecified,mashbooh,ไม่ทราบชนิดสัตว์และวิธีการเชือด,
+กลีเซอรีน,Glycerin,glycerol|กลีเซอรอล,E422,น้ำมันพืช,Vegetable oil,plant,halal,ไขมันจากพืชเป็นที่อนุมัติ,
+กลีเซอรีน,Glycerin,glycerol,E422,ไขมันสุกร,Pork fat,animal_prohibited,haram,อนุพันธ์จากสุกรเป็นสิ่งต้องห้าม,
+กลีเซอรีน,Glycerin,glycerol,E422,ไขมันสัตว์ไม่ระบุชนิด,Animal fat (unspecified),animal_unspecified,mashbooh,ไม่ทราบชนิดสัตว์และวิธีการเชือด,
+กลีเซอรีน,Glycerin,synthetic glycerol,E422,กระบวนการปิโตรเคมี,Petrochemical synthesis,mineral,halal,สารสังเคราะห์ที่ไม่มีส่วนประกอบต้องห้าม,
+กรดสเตียริก,Stearic acid,stearate|สเตียเรต,E570,น้ำมันพืช,Vegetable oil,plant,halal,ไขมันจากพืชเป็นที่อนุมัติ,
+กรดสเตียริก,Stearic acid,stearate,E570,ไขมันสุกร,Pork fat,animal_prohibited,haram,อนุพันธ์จากสุกรเป็นสิ่งต้องห้าม,
+กรดสเตียริก,Stearic acid,stearate,E570,ไขมันสัตว์ไม่ระบุชนิด,Animal fat (unspecified),animal_unspecified,mashbooh,ไม่ทราบชนิดสัตว์และวิธีการเชือด,
+แมกนีเซียมสเตียเรต,Magnesium stearate,mg stearate,E470b,น้ำมันพืช,Vegetable oil,plant,halal,ไขมันจากพืชเป็นที่อนุมัติ,ใช้เป็นสารหล่อลื่นในเม็ดยาและอาหารเสริม
+แมกนีเซียมสเตียเรต,Magnesium stearate,mg stearate,E470b,ไขมันสัตว์ไม่ระบุชนิด,Animal fat (unspecified),animal_unspecified,mashbooh,ไม่ทราบชนิดสัตว์และวิธีการเชือด,
+คาร์ไมน์,Carmine,cochineal|โคชินีล|carminic acid,E120,แมลงโคชินีล,Cochineal insect,insect,mashbooh,มีความเห็นต่างระหว่างสำนักคิดเรื่องการบริโภคแมลง จึงจัดเป็นที่คลุมเครือ,มาตรฐานฮาลาลบางประเทศจัดเป็นหะรอม ควรตรวจข้อกำหนดของผู้ให้การรับรอง
+เชลแล็ก,Shellac,ครั่ง|confectioner's glaze,E904,แมลงครั่ง,Lac insect,insect,mashbooh,เป็นสารคัดหลั่งจากแมลง ซึ่งมีความเห็นต่างระหว่างสำนักคิด,ใช้เคลือบเงาลูกอมและเม็ดยา
+แอล-ซิสเตอีน,L-Cysteine,l-cystine|ซิสเทอีน,E920,เส้นผมมนุษย์,Human hair,human,haram,ส่วนของร่างกายมนุษย์ไม่อาจนำมาบริโภคได้ตามหลักศาสนา,เคยพบใช้เป็นสารปรับสภาพแป้งในอุตสาหกรรมเบเกอรี่
+แอล-ซิสเตอีน,L-Cysteine,l-cystine,E920,ขนสัตว์ปีก,Poultry feathers,animal_unspecified,mashbooh,ขึ้นกับว่าสัตว์ปีกถูกเชือดตามหลักศาสนาหรือไม่,
+แอล-ซิสเตอีน,L-Cysteine,l-cystine,E920,จุลินทรีย์,Microbial,microbial,halal,ผลิตโดยการหมักจุลินทรีย์ที่ไม่ใช่สิ่งต้องห้าม,เป็นทางเลือกฮาลาลที่ผู้ผลิตควรระบุในฉลาก
+เปปซิน,Pepsin,pepsine,,กระเพาะสุกร,Pig stomach,animal_prohibited,haram,อนุพันธ์จากสุกรเป็นสิ่งต้องห้าม,เปปซินทางการค้าส่วนใหญ่สกัดจากกระเพาะสุกร
+เปปซิน,Pepsin,microbial pepsin,,จุลินทรีย์,Microbial,microbial,halal,ผลิตจากจุลินทรีย์ที่ไม่ใช่สิ่งต้องห้าม,
+ไลเปส,Lipase,เอนไซม์ไลเปส,,กระเพาะสุกร,Pig stomach,animal_prohibited,haram,อนุพันธ์จากสุกรเป็นสิ่งต้องห้าม,
+ไลเปส,Lipase,microbial lipase,,จุลินทรีย์,Microbial,microbial,halal,ผลิตจากจุลินทรีย์ที่ไม่ใช่สิ่งต้องห้าม,
+น้ำมันหมู,Lard,lard|น้ำมันสุกร|pork fat,,สุกร,Pork,animal_prohibited,haram,สุกรและอนุพันธ์เป็นสิ่งต้องห้ามโดยตัวบท,
+ไขมันสัตว์,Tallow,beef tallow|ไขวัว,,วัวเชือดตามหลักศาสนาอิสลาม,Halal-slaughtered cattle,animal_halal_slaughter,halal,สัตว์บกที่อนุมัติและเชือดถูกต้องตามหลักศาสนา,
+ไขมันสัตว์,Tallow,tallow,,ไขมันสัตว์ไม่ระบุชนิด,Animal fat (unspecified),animal_unspecified,mashbooh,ไม่ทราบชนิดสัตว์และวิธีการเชือด,
+เลือดและพลาสมา,Blood plasma,blood|พลาสมาเลือด,,เลือดสัตว์,Animal blood,blood,haram,เลือดที่ไหลออกเป็นสิ่งต้องห้ามโดยตัวบท (อัลกุรอาน 5:3),ใช้เป็นสารเพิ่มโปรตีนในผลิตภัณฑ์เนื้อบางชนิด
+เวย์โปรตีน,Whey protein,whey|เวย์,,เรนเนตจุลินทรีย์,Microbial rennet,microbial,halal,ผลพลอยได้จากการทำชีสที่ใช้เอนไซม์ฮาลาล,
+เวย์โปรตีน,Whey protein,whey|เวย์,,กระเพาะสุกร,Pig stomach,animal_prohibited,haram,หากใช้เรนเนตจากสุกรในการตกตะกอนนม ผลพลอยได้ย่อมปนเปื้อนสิ่งต้องห้าม,
+เวย์โปรตีน,Whey protein,whey,,ลูกวัวไม่ระบุวิธีการเชือด,Calf (slaughter unspecified),animal_unspecified,mashbooh,ไม่ทราบที่มาของเรนเนตที่ใช้ผลิต,ฉลากเวย์มักไม่ระบุชนิดเรนเนต
+ชีส,Cheese,เนยแข็ง|cheese,,เรนเนตจุลินทรีย์,Microbial rennet,microbial,halal,ใช้เอนไซม์จากจุลินทรีย์ที่ไม่ใช่สิ่งต้องห้าม,
+ชีส,Cheese,เนยแข็ง,,กระเพาะสุกร,Pig stomach,animal_prohibited,haram,ใช้เรนเนตจากสุกรในการผลิต,
+ชีส,Cheese,เนยแข็ง,,ลูกวัวไม่ระบุวิธีการเชือด,Calf (slaughter unspecified),animal_unspecified,mashbooh,ไม่ทราบที่มาของเรนเนตที่ใช้ผลิต,
+คอลลาเจน,Collagen,คอลลาเจนเปปไทด์|collagen peptide,,สุกร,Pork,animal_prohibited,haram,อนุพันธ์จากสุกรเป็นสิ่งต้องห้าม,
+คอลลาเจน,Collagen,fish collagen|คอลลาเจนปลา,,ปลา,Fish,aquatic,halal,สัตว์น้ำเป็นที่อนุมัติตามทัศนะมัซฮับชาฟิอีย์,คอลลาเจนปลาเป็นชนิดที่ใช้มากในผลิตภัณฑ์เสริมอาหารฮาลาล
+คอลลาเจน,Collagen,collagen,,วัวเชือดตามหลักศาสนาอิสลาม,Halal-slaughtered cattle,animal_halal_slaughter,halal,สัตว์บกที่อนุมัติและเชือดถูกต้องตามหลักศาสนา,
+คอลลาเจน,Collagen,collagen,,วัวไม่ระบุวิธีการเชือด,Cattle (slaughter unspecified),animal_unspecified,mashbooh,ไม่ทราบวิธีการเชือด,
+เนื้อสุกร,Pork,pork|หมู|หมูสามชั้น|bacon,,สุกร,Pork,animal_prohibited,haram,สุกรเป็นสิ่งต้องห้ามโดยตัวบท (อัลกุรอาน 2:173),
+เนื้อไก่,Chicken,chicken|ไก่,,ไก่เชือดตามหลักศาสนาอิสลาม,Halal-slaughtered chicken,animal_halal_slaughter,halal,สัตว์ปีกที่อนุมัติและเชือดถูกต้องพร้อมกล่าวพระนามอัลลอฮ์,
+เนื้อไก่,Chicken,chicken,,สัตว์ที่ตายเองหรือไม่ได้เชือด,Carrion (not ritually slaughtered),carrion,haram,มัยตะฮ์ (สัตว์ที่ตายเอง) เป็นสิ่งต้องห้ามโดยตัวบท (อัลกุรอาน 5:3),
+เนื้อวัว,Beef,beef|เนื้อโค,,วัวเชือดตามหลักศาสนาอิสลาม,Halal-slaughtered cattle,animal_halal_slaughter,halal,สัตว์บกที่อนุมัติและเชือดถูกต้องตามหลักศาสนา,
+เนื้อวัว,Beef,beef,,สัตว์ที่ตายเองหรือไม่ได้เชือด,Carrion (not ritually slaughtered),carrion,haram,มัยตะฮ์เป็นสิ่งต้องห้ามโดยตัวบท,
+ปลา,Fish,fish|เนื้อปลา,,ปลา,Fish,aquatic,halal,สัตว์น้ำเป็นที่อนุมัติตามทัศนะมัซฮับชาฟิอีย์ซึ่งเป็นมัซฮับหลักในไทย,ไม่ต้องผ่านการเชือดตามหลักศาสนา
+กุ้ง,Shrimp,shrimp|prawn|กุ้งขาว,,สัตว์น้ำ,Aquatic animal,aquatic,halal,สัตว์น้ำเป็นที่อนุมัติตามทัศนะมัซฮับชาฟิอีย์,
+ปูและหอย,Crab and shellfish,crab|shellfish|หอย,,สัตว์น้ำ,Aquatic animal,aquatic,halal,สัตว์น้ำเป็นที่อนุมัติตามทัศนะมัซฮับชาฟิอีย์,บางมัซฮับมีทัศนะจำกัดเฉพาะปลา
+ไข่,Egg,egg|ไข่ไก่|ไข่เป็ด,,ไข่,Egg,egg,halal,ไข่จากสัตว์ปีกที่อนุมัติเป็นที่อนุมัติ,
+นมวัว,Milk,milk|นม|นมโค,,นม,Milk,milk,halal,นมจากสัตว์ที่อนุมัติเป็นที่อนุมัติ,
+เนย,Butter,butter|เนยสด,,นม,Milk,milk,halal,ผลิตจากนมของสัตว์ที่อนุมัติ,
+มาการีน,Margarine,margarine|เนยเทียม,,น้ำมันพืช,Vegetable oil,plant,halal,ผลิตจากไขมันพืช,
+มาการีน,Margarine,margarine,,ไขมันสัตว์ไม่ระบุชนิด,Animal fat (unspecified),animal_unspecified,mashbooh,มาการีนบางสูตรผสมไขมันสัตว์,
+ผงชูรส,Monosodium glutamate,msg|โมโนโซเดียมกลูตาเมต,E621,จุลินทรีย์,Microbial,microbial,halal,ผลิตโดยการหมักแป้งหรือกากน้ำตาลด้วยจุลินทรีย์,เป็นกระบวนการผลิตมาตรฐานของอุตสาหกรรม
+ผงชูรส,Monosodium glutamate,msg,E621,อาหารเลี้ยงเชื้อจากสัตว์,Animal-derived culture medium,animal_unspecified,mashbooh,หากใช้อาหารเลี้ยงเชื้อที่มีส่วนประกอบจากสัตว์ที่ไม่ทราบแหล่งที่มา,
+ไดโซเดียมไอโนซิเนต,Disodium inosinate,i+g|ไอโนซิเนต,E631,ปลา,Fish,aquatic,halal,สกัดจากปลาซึ่งเป็นสัตว์น้ำที่อนุมัติ,
+ไดโซเดียมไอโนซิเนต,Disodium inosinate,i+g,E631,ไขมันสัตว์ไม่ระบุชนิด,Animal fat (unspecified),animal_unspecified,mashbooh,หากสกัดจากเนื้อสัตว์ที่ไม่ทราบวิธีการเชือด,
+น้ำตาลทราย,Sugar,sugar|น้ำตาล,,พืช,Plant,plant,halal,พืชเป็นที่อนุมัติโดยหลักเดิม,
+น้ำตาลฟอกสี,Refined sugar (bone char),bone char sugar|น้ำตาลฟอกด้วยถ่านกระดูก,,ถ่านกระดูกสัตว์,Bone char,animal_unspecified,mashbooh,ใช้ถ่านกระดูกสัตว์เป็นตัวกรองฟอกสี ซึ่งไม่ทราบชนิดและวิธีการเชือด,น้ำตาลไม่ได้สัมผัสสารต้องห้ามโดยตรงจึงมีทัศนะต่างกัน
+เพคติน,Pectin,pectin|เพกติน,E440,ผลไม้,Fruit,plant,halal,สกัดจากเปลือกผลไม้ซึ่งเป็นพืช,ใช้แทนเจลาตินในแยมและเยลลี่ฮาลาล
+วุ้น,Agar,agar|agar-agar|วุ้นสาหร่าย,E406,สาหร่ายทะเล,Seaweed,plant,halal,สาหร่ายเป็นพืชน้ำที่อนุมัติ,
+คาร์ราจีแนน,Carrageenan,carrageenan,E407,สาหร่ายทะเล,Seaweed,plant,halal,สกัดจากสาหร่ายแดง,
+ยีสต์,Yeast,yeast|ยีสต์ขนมปัง,,จุลินทรีย์,Microbial,microbial,halal,ยีสต์ Saccharomyces เป็นจุลินทรีย์ที่ไม่ใช่สิ่งต้องห้าม,
+ยีสต์สกัดจากกากเบียร์,Brewer's yeast,brewers yeast|ยีสต์เบียร์,,การหมักเพื่อผลิตสุรา,Alcoholic beverage fermentation,intoxicant,mashbooh,เป็นผลพลอยได้จากกระบวนการผลิตสุรา จึงมีประเด็นการปนเปื้อน,ต้องผ่านการล้างและตรวจสอบแอลกอฮอล์ตกค้าง
+น้ำมันปาล์ม,Palm oil,palm oil|น้ำมันปาล์มโอเลอิน,,น้ำมันพืช,Vegetable oil,plant,halal,ไขมันจากพืชเป็นที่อนุมัติ,
+น้ำมันมะพร้าว,Coconut oil,coconut oil,,น้ำมันพืช,Vegetable oil,plant,halal,ไขมันจากพืชเป็นที่อนุมัติ,
+น้ำมันถั่วเหลือง,Soybean oil,soybean oil,,น้ำมันพืช,Vegetable oil,plant,halal,ไขมันจากพืชเป็นที่อนุมัติ,
+แป้งสาลี,Wheat flour,wheat flour|แป้ง,,พืช,Plant,plant,halal,พืชเป็นที่อนุมัติโดยหลักเดิม,
+ซิลิกอนไดออกไซด์,Silicon dioxide,silica|ซิลิกา,E551,แร่ธาตุ,Mineral,mineral,halal,สารอนินทรีย์จากแร่ธาตุไม่ใช่สิ่งต้องห้าม,
+โซเดียมไบคาร์บอเนต,Sodium bicarbonate,baking soda|ผงฟู,E500,แร่ธาตุ,Mineral,mineral,halal,สารอนินทรีย์จากแร่ธาตุไม่ใช่สิ่งต้องห้าม,
+กรดซิตริก,Citric acid,citric acid|กรดมะนาว,E330,จุลินทรีย์,Microbial,microbial,halal,ผลิตโดยการหมักน้ำตาลด้วยเชื้อรา Aspergillus niger,
+วิตามินดีสาม,Vitamin D3,cholecalciferol|โคเลแคลซิเฟอรอล,,ขนแกะ,Lanolin (sheep wool),animal_byproduct,halal,ลาโนลินได้จากขนแกะที่มีชีวิตโดยไม่ต้องเชือดสัตว์,ทัศนะส่วนใหญ่ถือว่าขนสัตว์ที่มีชีวิตสะอาด
+วิตามินดีสาม,Vitamin D3,cholecalciferol,,ไขมันสัตว์ไม่ระบุชนิด,Animal fat (unspecified),animal_unspecified,mashbooh,วิตามินดีสามบางแหล่งสกัดจากไขมันสัตว์,
+ไลโซไซม์,Lysozyme,lysozyme,E1105,ไข่,Egg,egg,halal,สกัดจากไข่ขาวซึ่งเป็นที่อนุมัติ,ใช้เป็นสารกันเสียในชีสบางชนิด
+แคปซูลเจลาติน,Gelatin capsule,capsule|แคปซูลนิ่ม|softgel,,สุกร,Pork,animal_prohibited,haram,เปลือกแคปซูลผลิตจากเจลาตินสุกร,ประเด็นสำคัญของผลิตภัณฑ์ยาและอาหารเสริม
+แคปซูลเจลาติน,Gelatin capsule,capsule|แคปซูลนิ่ม,,วัวเชือดตามหลักศาสนาอิสลาม,Halal-slaughtered cattle,animal_halal_slaughter,halal,เปลือกแคปซูลผลิตจากเจลาตินวัวที่เชือดถูกต้อง,
+แคปซูลผัก,Vegetable capsule,hpmc|veg capsule|แคปซูลเอชพีเอ็มซี,,พืช,Plant,plant,halal,ผลิตจากเซลลูโลสของพืช,เป็นทางเลือกฮาลาลของแคปซูลเจลาติน

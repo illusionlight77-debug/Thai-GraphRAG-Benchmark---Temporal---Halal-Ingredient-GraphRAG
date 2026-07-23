@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thai GraphRAG + Benchmark</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕸️</text></svg>">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header>
+  <h1>🕸️ Thai GraphRAG + Benchmark</h1>
+  <span class="sub">GraphRAG vs vanilla RAG บนกราฟความรู้ภาษาไทย · Temporal (B) · Halal-Ingredient (C)</span>
+  <span class="spacer"></span>
+  <span id="svcStatus" class="row tight small"></span>
+  <a href="/docs" target="_blank" class="pill">API /docs</a>
+</header>
+
+<nav id="nav">
+  <button data-page="overview" class="active">1 · ภาพรวม</button>
+  <button data-page="ask">2 · ถาม / เปรียบเทียบ</button>
+  <button data-page="kg">3 · สำรวจกราฟ</button>
+  <button data-page="benchmark">4 · Benchmark</button>
+  <button data-page="eval">5 · ชุดคำถาม</button>
+  <button data-page="temporal">6 · Temporal (B)</button>
+  <button data-page="ingredient">7 · Halal-Ingredient (C)</button>
+</nav>
+
+<main>
+
+  <!-- ─────────── 1. OVERVIEW ─────────── -->
+  <section class="page active" id="page-overview">
+    <h2>ภาพรวมระบบ</h2>
+    <p class="lead">ตัวเลขทั้งหมดในหน้านี้ดึงสดจาก Neo4j / Qdrant / TEI ที่กำลังรันอยู่</p>
+
+    <div class="grid cols-4" id="statCards"><div class="muted">กำลังโหลด <span class="spinner"></span></div></div>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>คำถามวิจัย</h3>
+        <p class="small">การดึงข้อมูลแบบมีโครงสร้างกราฟ (<b>GraphRAG</b>) ชนะการดึงแบบเวกเตอร์
+        (<b>vanilla RAG</b>) สำหรับคำถามภาษาไทยหรือไม่ และ <b>ชนะตรงไหน</b></p>
+        <p class="small"><b>สมมติฐาน:</b> ช่องว่างของ GraphRAG เหนือ vanilla จะ<b>กว้างขึ้นตามจำนวน hop</b>
+        (single → multi / relational) เพราะ vanilla ดึงโหนดที่คล้ายคำถามได้ แต่เดินตามความสัมพันธ์ไม่ได้</p>
+        <p class="small muted">ตัวแปรที่เปลี่ยนมีอย่างเดียวคือ <b>retriever</b> — pipeline, embedding (bge-m3),
+        LLM และ prompt ใช้ตัวเดียวกันทั้งหมด</p>
+      </div>
+      <div class="card">
+        <h3>โครงสร้างโหนดในกราฟ</h3>
+        <div class="table-wrap"><table id="labelTable"><tbody></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>ความสัมพันธ์</h3>
+        <div class="table-wrap"><table id="relTable"><tbody></tbody></table></div>
+      </div>
+      <div class="card">
+        <h3>ชุดคำถามประเมิน</h3>
+        <div class="table-wrap"><table id="evalTable"><tbody></tbody></table></div>
+        <p class="small muted" style="margin-bottom:0">
+          <b>hop_type:</b> single = ตอบจากโหนดเดียว · multi = ต้องเชื่อม ≥2 โหนด ·
+          relational = คำตอบคือความสัมพันธ์/คุณสมบัติที่ต้องเดินไปหา</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 2. ASK / COMPARE ─────────── -->
+  <section class="page" id="page-ask">
+    <h2>ถามคำถาม — เทียบ Vanilla กับ GraphRAG</h2>
+    <p class="lead">พิมพ์คำถามภาษาไทย ระบบจะรัน retriever ที่เลือกผ่าน pipeline เดียวกัน แล้วแสดงคำตอบเทียบกัน</p>
+
+    <div class="card">
+      <input type="text" id="askInput" placeholder="เช่น มัสยิดกลางปัตตานีตั้งอยู่จังหวัดใด">
+      <div class="row" style="margin-top:11px">
+        <label class="row tight small"><input type="checkbox" class="askRetr" value="vanilla" checked style="width:auto"> vanilla</label>
+        <label class="row tight small"><input type="checkbox" class="askRetr" value="graphrag" checked style="width:auto"> graphrag</label>
+        <label class="row tight small"><input type="checkbox" class="askRetr" value="temporal" style="width:auto"> temporal</label>
+        <label class="row tight small"><input type="checkbox" class="askRetr" value="halal_ingredient" style="width:auto"> halal_ingredient</label>
+        <span class="spacer" style="flex:1"></span>
+        <button class="btn" id="askBtn">ถาม</button>
+      </div>
+      <div class="row small" style="margin-top:9px">
+        <span class="muted">ตัวอย่าง:</span>
+        <span class="pill ex">มัสยิดกลางปัตตานีตั้งอยู่จังหวัดใด</span>
+        <span class="pill ex">ร้านอาหารฮาลาลในจังหวัดเดียวกับมัสยิดกลางปัตตานีมีอะไรบ้าง</span>
+        <span class="pill ex">จังหวัดปัตตานีอยู่ภาคใด</span>
+        <span class="pill ex">7-Eleven เป็นร้านประเภทใด</span>
+      </div>
+    </div>
+
+    <div id="linkTrace"></div>
+    <div id="askResults" class="grid cols-2"></div>
+  </section>
+
+  <!-- ─────────── 3. KG EXPLORER ─────────── -->
+  <section class="page" id="page-kg">
+    <h2>สำรวจกราฟความรู้</h2>
+    <p class="lead">ค้นหาโหนดใน Neo4j ดูคุณสมบัติและความสัมพันธ์รอบตัว พร้อมมุมมองกราฟย่อ</p>
+
+    <div class="card">
+      <div class="row">
+        <input type="text" id="kgQuery" placeholder="ค้นชื่อโหนด เช่น ปัตตานี, 7-Eleven, เจลาติน" style="flex:1;min-width:240px">
+        <select id="kgLabel" style="width:auto;min-width:170px"><option value="">ทุกประเภทโหนด</option></select>
+        <button class="btn" id="kgBtn">ค้นหา</button>
+      </div>
+    </div>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>ผลการค้นหา</h3>
+        <div class="table-wrap"><table id="kgResults"><tbody></tbody></table></div>
+      </div>
+      <div class="card">
+        <h3 id="kgDetailTitle">รายละเอียดโหนด</h3>
+        <div id="kgDetail" class="muted small">เลือกโหนดจากผลการค้นหา</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>มุมมองกราฟ <span class="muted small" id="graphHint"></span></h3>
+      <svg id="graphSvg"></svg>
+    </div>
+  </section>
+
+  <!-- ─────────── 4. BENCHMARK ─────────── -->
+  <section class="page" id="page-benchmark">
+    <h2>Benchmark</h2>
+    <p class="lead">รันการทดลองจริงแล้วดูตารางสรุปกับกราฟ F1 แยกตาม hop type</p>
+
+    <div class="card">
+      <div class="row">
+        <select id="benchSuite" style="width:auto;min-width:230px">
+          <option value="core">A — core (vanilla vs graphrag)</option>
+          <option value="temporal">B — temporal</option>
+          <option value="ingredient">C — halal ingredient</option>
+          <option value="all">ทั้งหมด (A + B + C)</option>
+        </select>
+        <label class="row tight small"><input type="checkbox" id="benchJudge" style="width:auto"> LLM-as-judge (faithfulness)</label>
+        <label class="row tight small">จำกัดจำนวนข้อ
+          <input type="number" id="benchLimit" value="0" min="0" style="width:80px"> <span class="muted">(0 = ทั้งหมด)</span></label>
+        <span style="flex:1"></span>
+        <button class="btn" id="benchRun">รัน benchmark</button>
+        <button class="btn ghost" id="benchReload">โหลดผลล่าสุด</button>
+      </div>
+      <div id="benchStatus" class="small muted" style="margin-top:9px"></div>
+    </div>
+
+    <div id="benchMeta"></div>
+    <div class="card">
+      <h3>ตารางสรุป</h3>
+      <div class="table-wrap"><table id="benchSummary"><tbody></tbody></table></div>
+    </div>
+    <div class="grid cols-2" id="benchFigures"></div>
+    <div class="card">
+      <h3>รายข้อ (600 แถวแรก)</h3>
+      <div class="table-wrap"><table id="benchDetail"><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ─────────── 5. EVAL SET ─────────── -->
+  <section class="page" id="page-eval">
+    <h2>ชุดคำถามประเมิน</h2>
+    <p class="lead">ดูและแก้ไขชุดคำถามที่ใช้วัดผล — นี่คือ artefact หลักที่งานนี้ปล่อยออกมา</p>
+
+    <div class="card">
+      <div class="row">
+        <select id="evalFile" style="width:auto;min-width:290px"></select>
+        <select id="evalHop" style="width:auto;min-width:170px">
+          <option value="">ทุก hop_type</option>
+          <option value="single">single</option>
+          <option value="multi">multi</option>
+          <option value="relational">relational</option>
+        </select>
+        <span style="flex:1"></span>
+        <button class="btn ghost" id="evalEditToggle">แก้ไขเป็น JSONL</button>
+        <button class="btn" id="evalSave" style="display:none">บันทึก</button>
+      </div>
+      <div id="evalMsg" style="margin-top:9px"></div>
+    </div>
+
+    <div class="card" id="evalEditorCard" style="display:none">
+      <h3>แก้ไข (หนึ่ง JSON object ต่อบรรทัด)</h3>
+      <textarea id="evalEditor" style="min-height:360px" class="mono"></textarea>
+    </div>
+
+    <div class="card">
+      <h3 id="evalTitle">คำถาม</h3>
+      <div class="table-wrap"><table id="evalItems"><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ─────────── 6. TEMPORAL ─────────── -->
+  <section class="page" id="page-temporal">
+    <h2>Temporal GraphRAG (Extension B)</h2>
+    <p class="lead">เลือกปี พ.ศ. แล้วดูว่าคำตอบเปลี่ยนอย่างไร — เทียบกับ GraphRAG ที่ไม่รู้เรื่องเวลา</p>
+
+    <div class="card">
+      <input type="text" id="tempInput" placeholder="เช่น สินค้าที่มีเจลาตินยังได้รับรองฮาลาลอยู่หรือไม่">
+      <div class="row" style="margin-top:11px">
+        <label class="row tight small">ณ ปี พ.ศ.
+          <input type="number" id="tempYear" value="2570" min="2540" max="2580" style="width:110px"></label>
+        <input type="range" id="tempSlider" min="2565" max="2575" value="2570" style="flex:1;min-width:200px">
+        <button class="btn" id="tempBtn">ถาม</button>
+      </div>
+      <p class="small muted" style="margin-bottom:0">ตัวกรองเวลา:
+        <code>(valid_from IS NULL OR valid_from ≤ as_of) AND (valid_to IS NULL OR valid_to ≥ as_of)</code></p>
+    </div>
+
+    <div id="tempResults" class="grid cols-2"></div>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>ระเบียบ/กฎหมายที่บังคับใช้ ณ ปีที่เลือก</h3>
+        <div class="table-wrap"><table id="tempTimeline"><tbody></tbody></table></div>
+      </div>
+      <div class="card">
+        <h3>ความครอบคลุมของข้อมูลเวลา</h3>
+        <div id="tempCoverage" class="muted small">กำลังโหลด…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 7. INGREDIENT ─────────── -->
+  <section class="page" id="page-ingredient">
+    <h2>Halal-Ingredient GraphRAG (Extension C)</h2>
+    <p class="lead">ใส่ชื่อส่วนผสมหรือสินค้า แล้วดู <b>เส้นทางเหตุผล</b> ส่วนผสม → แหล่งที่มา → คำวินิจฉัย</p>
+
+    <div class="card">
+      <div class="row">
+        <input type="text" id="ingInput" placeholder="เช่น เจลาติน, เรนเนต, แอล-ซิสเตอีน, เวย์โปรตีน" style="flex:1;min-width:240px">
+        <button class="btn" id="ingBtn">อธิบาย</button>
+      </div>
+      <div class="row small" style="margin-top:9px">
+        <span class="muted">ตัวอย่าง:</span>
+        <span class="pill ing-ex">เจลาติน</span>
+        <span class="pill ing-ex">เรนเนต</span>
+        <span class="pill ing-ex">แอล-ซิสเตอีน</span>
+        <span class="pill ing-ex">เอทานอล</span>
+        <span class="pill ing-ex">คาร์ไมน์</span>
+      </div>
+    </div>
+
+    <div id="ingAnswer"></div>
+    <div id="ingPaths"></div>
+
+    <div class="card">
+      <h3>ฐานคำวินิจฉัยทั้งหมด <span class="muted small" id="ingCount"></span></h3>
+      <p class="small muted">ส่วนผสมที่มีคำวินิจฉัยต่างกันตามแหล่งที่มาคือหัวใจของ Extension C —
+        ถ้าไม่ระบุแหล่งที่มา ก็ตอบไม่ได้</p>
+      <div class="table-wrap"><table id="ingTable"><tbody></tbody></table></div>
+    </div>
+  </section>
+
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

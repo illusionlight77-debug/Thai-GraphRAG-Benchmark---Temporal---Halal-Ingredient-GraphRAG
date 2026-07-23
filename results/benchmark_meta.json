@@ -1,0 +1,23 @@
+{
+  "generated_at": "2026-07-23 10:47:32",
+  "elapsed_s": 0.8,
+  "suites": [
+    "core"
+  ],
+  "judge": true,
+  "questions": 4,
+  "rows": 8,
+  "llm": {
+    "calls": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "errors": 0,
+    "by_model": {}
+  },
+  "integrity": "0/8 rows had an LLM error (0.0%)",
+  "figures": [
+    "E:\\Thai GraphRAG + Benchmark - Temporal - Halal Ingredient GraphRAG\\results\\figures\\f1_by_hop.png",
+    "E:\\Thai GraphRAG + Benchmark - Temporal - Halal Ingredient GraphRAG\\results\\figures\\retrieval_vs_answer.png",
+    "E:\\Thai GraphRAG + Benchmark - Temporal - Halal Ingredient GraphRAG\\results\\figures\\cost_latency.png"
+  ]
+}

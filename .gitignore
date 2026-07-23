@@ -1,0 +1,37 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Local caches / model
+.fastembed_cache/
+models/
+
+# Source CSVs live outside git (product_processed.csv alone is 133MB).
+# The curated research data under data/halal/ IS committed — it is a project artefact.
+data/raw/
+data/*.csv
+!data/halal/*.csv
+
+# Neo4j / Qdrant local storage
+neo4j_data/
+qdrant_storage/
+
+# Benchmark artefacts: the summary, run metadata and figures are committed so the
+# README renders on GitHub. The per-question detail file is regenerated and large.
+results/benchmark_detail.csv
+!results/benchmark_summary.csv
+!results/benchmark_meta.json
+!results/figures/*.png
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,29 @@
+# ── Graph + vector stores ────────────────────────────────────────
+neo4j>=5.20                 # knowledge graph (Cypher)
+qdrant-client>=1.9          # vector store for the vanilla-RAG baseline
+
+# ── Embeddings: bge-m3 (Thai-aware, 1024d) ───────────────────────
+# served by a local TEI container over HTTP (see docker-compose); httpx calls it.
+httpx>=0.27
+# fastembed>=0.3.4          # optional local fallback backend
+
+# ── LLM grounding + judge ────────────────────────────────────────
+# Groq (default) or any OpenAI-compatible endpoint (e.g. OpenThaiGPT) via httpx.
+
+# ── Data / pipeline ──────────────────────────────────────────────
+pandas>=2.0
+numpy>=1.24
+pydantic>=2.7
+pydantic-settings>=2.3
+tqdm>=4.66
+
+# ── Benchmark reporting ──────────────────────────────────────────
+matplotlib>=3.7          # also provides the point-in-polygon province lookup
+seaborn>=0.12
+
+# ── Demo UI + REST API ───────────────────────────────────────────
+fastapi>=0.110
+uvicorn[standard]>=0.29
+
+# ── Dev / test ───────────────────────────────────────────────────
+pytest>=8.2

@@ -1,0 +1,32 @@
+{"id": "s01", "question": "ฮาลาลแปลว่าอะไร", "answer": "สิ่งที่อนุมัติหรืออนุญาตตามหลักศาสนาอิสลาม", "hop_type": "single", "aliases": ["อนุมัติ", "อนุญาต"]}
+{"id": "s02", "question": "ร้านอาหารชื่อ Mooz อยู่จังหวัดอะไร", "answer": "ประจวบคีรีขันธ์", "hop_type": "single", "aliases": ["ประจวบ"]}
+{"id": "s03", "question": "7-Eleven เป็นร้านสะดวกซื้อประเภทใด", "answer": "convenience", "hop_type": "single", "aliases": ["ร้านสะดวกซื้อ", "convenience store"]}
+{"id": "s04", "question": "มัสยิดกลางปัตตานีตั้งอยู่จังหวัดใด", "answer": "ปัตตานี", "hop_type": "single"}
+{"id": "s05", "question": "น้ำตกโตนงาช้างอยู่จังหวัดอะไร", "answer": "สงขลา", "hop_type": "single"}
+{"id": "s06", "question": "diet_halal ของร้าน Mooz มีค่าเป็นอะไร", "answer": "halal", "hop_type": "single", "aliases": ["ฮาลาล"]}
+{"id": "s07", "question": "อาหารประเภทฮาลาลห้ามใช้วัตถุดิบจากสัตว์ชนิดใดเป็นหลัก", "answer": "หมู", "hop_type": "single", "aliases": ["สุกร"]}
+{"id": "s08", "question": "แบรนด์ 7-Eleven มีรหัส wikidata ว่าอะไร", "answer": "Q259340", "hop_type": "single"}
+{"id": "s09", "question": "มัสยิดในภาษาอังกฤษเรียกว่าอะไร", "answer": "mosque", "hop_type": "single"}
+{"id": "s10", "question": "โรงแรมในภาษาอังกฤษของ node ประเภทที่พักคือ label ใด", "answer": "Hotel", "hop_type": "single"}
+
+{"id": "m01", "question": "มีร้านอาหารฮาลาลในจังหวัดเดียวกับมัสยิดกลางปัตตานีหรือไม่", "answer": "มี", "hop_type": "multi", "aliases": ["ปัตตานี", "มี"]}
+{"id": "m02", "question": "ร้านสะดวกซื้อประเภท convenience ในจังหวัดเดียวกับร้านอาหาร Mooz มีไหม", "answer": "มี", "hop_type": "multi", "aliases": ["ประจวบคีรีขันธ์"]}
+{"id": "m03", "question": "มีโรงแรมอยู่ในจังหวัดเดียวกับน้ำตกโตนงาช้างหรือไม่", "answer": "มี", "hop_type": "multi", "aliases": ["สงขลา"]}
+{"id": "m04", "question": "จังหวัดที่มีทั้งร้านอาหารฮาลาลและมัสยิดในระบบมีจังหวัดใดบ้าง", "answer": "ปัตตานี", "hop_type": "multi", "aliases": ["สงขลา", "กรุงเทพมหานคร"]}
+{"id": "m05", "question": "ร้าน 7-Eleven ที่อยู่กรุงเทพมหานครอยู่จังหวัดเดียวกับมัสยิดใดได้บ้าง", "answer": "มัสยิดในกรุงเทพมหานคร", "hop_type": "multi", "aliases": ["กรุงเทพ"]}
+{"id": "m06", "question": "สถานที่ท่องเที่ยวที่อยู่จังหวัดเดียวกับมัสยิดกลางปัตตานีคืออะไร", "answer": "สถานที่ท่องเที่ยวในจังหวัดปัตตานี", "hop_type": "multi", "aliases": ["ปัตตานี"]}
+{"id": "m07", "question": "มีร้านอาหารฮาลาลและร้านสะดวกซื้ออยู่ในจังหวัดเดียวกันไหม", "answer": "มี", "hop_type": "multi"}
+{"id": "m08", "question": "โรงแรมและร้านอาหารฮาลาลอยู่ร่วมจังหวัดกันในจังหวัดใดได้บ้าง", "answer": "ประจวบคีรีขันธ์", "hop_type": "multi", "aliases": ["สงขลา", "ปัตตานี"]}
+{"id": "m09", "question": "จังหวัดของร้าน Mooz มีสถานที่ท่องเที่ยวอยู่ด้วยหรือไม่", "answer": "มี", "hop_type": "multi", "aliases": ["ประจวบคีรีขันธ์"]}
+{"id": "m10", "question": "มัสยิดที่อยู่จังหวัดเดียวกับน้ำตกโตนงาช้างมีหรือไม่", "answer": "มี", "hop_type": "multi", "aliases": ["สงขลา"]}
+
+{"id": "r01", "question": "โรงแรมที่อยู่จังหวัดเดียวกับน้ำตกโตนงาช้างอยู่จังหวัดใด", "answer": "สงขลา", "hop_type": "relational"}
+{"id": "r02", "question": "ร้านอาหาร Mooz เชื่อมกับจังหวัดใดด้วยความสัมพันธ์ LOCATED_IN", "answer": "ประจวบคีรีขันธ์", "hop_type": "relational", "aliases": ["ประจวบ"]}
+{"id": "r03", "question": "7-Eleven สาขาในกรุงเทพเชื่อมกับ node จังหวัดใด", "answer": "กรุงเทพมหานคร", "hop_type": "relational", "aliases": ["กรุงเทพ", "กทม"]}
+{"id": "r04", "question": "มัสยิดกลางปัตตานีมีความสัมพันธ์ LOCATED_IN ไปยังจังหวัดใด", "answer": "ปัตตานี", "hop_type": "relational"}
+{"id": "r05", "question": "Store ที่มี store_type convenience เชื่อมกับประเภทร้านใด", "answer": "convenience", "hop_type": "relational", "aliases": ["StoreType convenience"]}
+{"id": "r06", "question": "จังหวัดปลายทางของความสัมพันธ์ LOCATED_IN จากร้าน Mooz คือจังหวัดใด", "answer": "ประจวบคีรีขันธ์", "hop_type": "relational"}
+{"id": "r07", "question": "สถานที่ท่องเที่ยวโตนงาช้างเชื่อมกับจังหวัดใดผ่าน LOCATED_IN", "answer": "สงขลา", "hop_type": "relational"}
+{"id": "r08", "question": "โรงแรมในระบบเชื่อมกับ node ประเภทใดผ่านความสัมพันธ์ LOCATED_IN", "answer": "Province", "hop_type": "relational", "aliases": ["จังหวัด"]}
+{"id": "r09", "question": "ร้านอาหารฮาลาลใช้ความสัมพันธ์ชนิดใดในการระบุจังหวัดที่ตั้ง", "answer": "LOCATED_IN", "hop_type": "relational"}
+{"id": "r10", "question": "จากมัสยิดกลางปัตตานี เดินหนึ่ง hop ไปยังจังหวัดแล้วมีสถานที่ประเภทใดอยู่ในจังหวัดนั้นได้บ้าง", "answer": "ร้านอาหาร โรงแรม ร้านค้า สถานที่ท่องเที่ยว", "hop_type": "relational", "aliases": ["ร้านอาหาร"]}

@@ -1,0 +1,111 @@
+# ==================================================================
+# Thai GraphRAG + Benchmark — the whole research stack in one command
+#
+#   docker compose up --build -d
+#
+#   neo4j      : knowledge graph (Cypher)            → http://localhost:7474
+#   qdrant     : vector store, vanilla-RAG baseline  → http://localhost:6333/dashboard
+#   embeddings : bge-m3 served by TEI (HTTP, 1024d)  → http://localhost:8080
+#   app        : FastAPI demo UI + REST API          → http://localhost:8000
+#
+# On first boot `app` waits for the three services, builds the KG, builds the B and C
+# layers, runs the benchmark once, then serves. Set SKIP_BOOTSTRAP=1 in .env to skip
+# that (slow) step on later boots.
+# ==================================================================
+services:
+  neo4j:
+    image: neo4j:5
+    ports:
+      - "7474:7474"   # browser
+      - "7687:7687"   # bolt
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD:-thaigraphrag}
+      # The default 512M page cache is not enough for a ~60k-node graph with
+      # full-text indexes; Neo4j starts thrashing during the build without this.
+      NEO4J_server_memory_pagecache_size: 1G
+      NEO4J_server_memory_heap_max__size: 2G
+    volumes:
+      - neo4j_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:7474 >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"   # REST/HTTP + dashboard
+      - "6334:6334"   # gRPC
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c ':> /dev/tcp/127.0.0.1/6333' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 15s
+
+  embeddings:
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-1.8
+    # bge-m3 accepts 8192-token inputs; TEI's default 16384 max-batch-tokens makes
+    # CPU warmup allocate >15GB and get OOM-killed. Node texts are short, so cap the
+    # batch and auto-truncate — keeps memory modest and the service stable.
+    # max-client-batch-size must be >= EMBED_BATCH or the KG build gets 413s.
+    command: ["--model-id", "BAAI/bge-m3", "--port", "80",
+              "--max-batch-tokens", "2048",
+              "--max-client-batch-size", "64",
+              "--max-concurrent-requests", "32",
+              "--auto-truncate"]
+    ports:
+      - "8080:80"
+    volumes:
+      - emb_cache:/data     # ~2GB model download, cached across restarts
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:80/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 60           # generous: the first boot downloads the weights
+      start_period: 60s
+
+  app:
+    build: .
+    env_file: .env
+    environment:
+      # Inside the compose network services are reachable by name, which overrides
+      # the localhost values in .env that the host-side CLI uses.
+      NEO4J_URI: bolt://neo4j:7687
+      QDRANT_URL: http://qdrant:6333
+      EMBEDDING_URL: http://embeddings:80
+      DATA_DIR: /app/data
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data:ro       # source CSVs, read-only
+      - ./results:/app/results    # benchmark artefacts, written back to the host
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+      embeddings:
+        condition: service_started   # not _healthy: the 2GB download must not block boot
+    restart: unless-stopped
+    command: >
+      sh -c "python -m scripts.bootstrap;
+             uvicorn thaigraphrag.app.main:app --host 0.0.0.0 --port 8000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/health >/dev/null || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 30
+      start_period: 120s
+
+volumes:
+  neo4j_data:
+  qdrant_storage:
+  emb_cache:
