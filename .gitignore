@@ -26,6 +26,9 @@ qdrant_storage/
 # Benchmark artefacts: the summary, run metadata and figures are committed so the
 # README renders on GitHub. The per-question detail file is regenerated and large.
 results/benchmark_detail.csv
+results/benchmark_detail_FAILED.csv
+results/.checkpoint_*.jsonl     # per-row resume state, regenerated
+results/benchmark_run.log
 !results/benchmark_summary.csv
 !results/benchmark_meta.json
 !results/figures/*.png

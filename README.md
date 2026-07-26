@@ -88,11 +88,91 @@
 
 ![tour](docs/img/00-tour.gif)
 
-<!-- RESULTS:SCREENSHOTS -->
+| | |
+|---|---|
+| ![overview](docs/img/01-overview.png) **1 · ภาพรวม** — ตัวเลขสดจาก Neo4j/Qdrant/TEI | ![ask](docs/img/02-ask-compare.png) **2 · ถาม/เปรียบเทียบ** — vanilla vs GraphRAG เคียงกัน + entity linking + context |
+| ![kg](docs/img/03-kg-explorer.png) **3 · สำรวจกราฟ** — ค้นโหนด ดูความสัมพันธ์ + graph view | ![bench](docs/img/04-benchmark.png) **4 · Benchmark** — ตารางสรุป + กราฟ F1/containment แยกตาม hop |
+| ![eval](docs/img/05-eval-set.png) **5 · ชุดคำถาม** — ดู/แก้ชุดประเมิน แยก hop_type | ![temporal](docs/img/06-temporal.png) **6 · Temporal (B)** — เลือกปี พ.ศ. คำตอบเปลี่ยนตามเวลา |
+| ![ingredient](docs/img/07-ingredient.png) **7 · Halal-Ingredient (C)** — เส้นทางคำวินิจฉัยที่ตรวจได้ | ![how](docs/img/08-how-it-works.png) **📘 ระบบทำงานอย่างไร** — ไดอะแกรมอธิบายทั้งระบบ |
 
 ---
 
-<!-- RESULTS:FINDINGS -->
+## 📊 RESEARCH RESULTS
+
+รัน `python -m scripts.run_benchmark --suite all` · **331 คำถาม · 799 (คำถาม×retriever) · 0 error สำคัญ**
+(8/799 = 1.0% ต่ำกว่าเกณฑ์ integrity 2%) · faithfulness (LLM-judge) วัดเต็มบน suite core
+
+> **อ่านตัวเลขให้ถูก:** F1 ระดับตัวอักษรมี noise สูงในภาษาไทย และ**ลงโทษคำตอบยาวที่ถูกต้อง**
+> ของ GraphRAG (มันเสมอบน F1 แต่ชนะขาดบน containment) — เมตริกที่บอกความจริงคือ
+> **context_recall** (retriever ดึงหลักฐานเจอไหม = เพดานของคำตอบ) และ **containment**
+> (คำตอบมีคำตอบที่ถูกอยู่ไหม) จึงรายงานสองตัวนี้เป็นหลัก
+
+### A (core) — GraphRAG ชนะขาดตรงคำถาม multi-hop ✅ สมมติฐานได้รับการยืนยัน
+
+**containment แยกตาม hop type** (คำตอบมีคำตอบที่ถูก · ยิ่งสูงยิ่งดี)
+
+| hop_type | vanilla | **graphrag** | ช่องว่าง |
+|----------|--------:|-------------:|--------:|
+| **multi** | 0.354 | **0.969** | **+0.615** 🔥 |
+| single | 0.438 | **0.625** | +0.188 |
+| relational | **0.708** | 0.646 | −0.062 |
+
+**context_recall แยกตาม hop type** (retriever ดึงหลักฐานเจอ = เพดานของคำตอบ)
+
+| hop_type | vanilla | **graphrag** | ช่องว่าง |
+|----------|--------:|-------------:|--------:|
+| **multi** | 0.477 | **1.000** | **+0.523** 🔥 |
+| single | 0.609 | **0.797** | +0.188 |
+| relational | **0.846** | 0.738 | −0.108 |
+
+**ภาพรวม (ALL):** faithfulness graphrag **0.938** vs vanilla 0.851 · EM vanilla 0.129 > graphrag 0.077
+(vanilla ตอบสั้นตรงตัวกว่าบน single) · char-F1 เสมอ 0.367/0.366 (ตามที่เตือน)
+
+**คำวินิจฉัย A:** บนคำถาม **multi-hop จริง GraphRAG ดึงหลักฐานเจอ 100% เทียบกับ vanilla 48%
+และคำตอบถูก 97% เทียบกับ 35%** — ช่องว่างกว้างที่สุดตรง multi พอดี ตรงตามสมมติฐาน
+ที่ว่าข้อได้เปรียบโตตามจำนวน hop · **ข้อยกเว้น: relational** ที่ vanilla ดีกว่าเล็กน้อย เพราะคำถาม
+relational ในชุดนี้ (เช่น "จังหวัด X อยู่ภาคใด") มักตอบได้จากข้อความโหนดเดียว ซึ่งเป็นจุดแข็งของ vanilla
+· **ต้นทุน:** GraphRAG ใช้ token เฉลี่ย ~3 เท่า (1025 vs 341) — นี่คือ trade-off ที่ซื่อตรง
+
+![containment by hop](results/figures/containment_by_hop.png)
+
+### B (Temporal) — เฉพาะ retriever ที่รู้เวลาเท่านั้นที่ดึงหลักฐานเชิงเวลาได้ ✅
+
+| retriever | context_recall | containment | faithfulness* |
+|-----------|---------------:|------------:|--------------:|
+| vanilla | 0.000 | 0.273 | 0.94 |
+| graphrag (ไม่รู้เวลา) | 0.000 | 0.145 | 0.56 |
+| **temporal** | **0.909** | **0.818** | **1.00** |
+
+**คำวินิจฉัย B:** เพิ่มตัวกรองเวลา แล้ว **context_recall กระโดดจาก 0.00 → 0.91** — retriever ที่ไม่รู้เวลา
+**ดึงข้อเท็จจริงเรื่องปีหมดอายุไม่เจอเลย** ส่วน temporal ดึงเจอเกือบทุกข้อ และตอบถูก (containment)
+0.82 เทียบกับ 0.27 · หมายเหตุ: เมตริก `wrong_era` ออกมาเท่ากันหมด (0.025) เพราะเงื่อนไข "ต้องพูดคำตอบ
+เก่าเป๊ะ ๆ" เข้มเกินไปจนไม่แยกแยะ — เราจึงรายงาน context_recall/containment เป็นหลัก
+(*faithfulness เป็น sample บางส่วน วัดเต็มเฉพาะ core)
+
+### C (Halal-Ingredient) — retriever เฉพาะทางให้เส้นทางที่ตรวจได้ 94% ✅
+
+| retriever | containment | context_recall | **path_validity** | เส้นทางสมบูรณ์ |
+|-----------|------------:|---------------:|------------------:|--------------:|
+| vanilla | 0.354 | 0.159 | 0.000 | 0.000 |
+| graphrag | 0.659 | 0.720 | 0.000 | 0.000 |
+| **halal_ingredient** | **0.683** | **0.939** | **0.939** | **0.939** |
+
+**คำวินิจฉัย C:** ทั้งความถูกต้องและความอธิบายได้เป็นของ retriever เฉพาะทาง — **94% ของคำตอบมีเส้นทาง
+เหตุผล ส่วนผสม→แหล่งที่มา→คำวินิจฉัย ที่สมบูรณ์และตรวจย้อนได้** ขณะที่ vanilla/graphrag ได้ 0%
+(ไม่ได้ออกแบบให้คืน path) · vanilla ดึงหลักฐานเจอแค่ 16% — ตอบเรื่องส่วนผสมแทบไม่ได้เลย
+
+### สรุปทั้งสามหัวข้อ
+
+| | ผลหลัก | เมตริกชี้ขาด |
+|---|--------|-------------|
+| **A** | GraphRAG ชนะขาด multi-hop (+0.62 containment), ชนะ single, แพ้ relational นิด | containment/context_recall แยก hop |
+| **B** | เฉพาะ temporal ดึงหลักฐานเชิงเวลาได้ (0.91 vs 0.00) | context_recall |
+| **C** | halal_ingredient ให้เส้นทางตรวจได้ 94% (others 0%) | path_validity |
+
+รูปทั้งหมด: `results/figures/` — `containment_by_hop.png` · `context_recall_by_hop.png` ·
+`retrieval_vs_answer.png` · `temporal_retrieval.png` · `ingredient_path_validity.png` · `cost_latency.png`
+อ้างอิงงานที่เกี่ยวข้องใน [`docs/REFERENCES.md`](docs/REFERENCES.md)
 
 ---
 

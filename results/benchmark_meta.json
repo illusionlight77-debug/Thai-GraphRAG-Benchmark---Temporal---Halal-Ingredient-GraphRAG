@@ -1,23 +1,33 @@
 {
-  "generated_at": "2026-07-23 10:47:32",
-  "elapsed_s": 0.8,
+  "generated_at": "2026-07-26 11:31:22",
+  "elapsed_s": 2915.5,
   "suites": [
-    "core"
+    "core",
+    "temporal",
+    "ingredient"
   ],
-  "judge": true,
-  "questions": 4,
-  "rows": 8,
+  "judge": false,
+  "questions": 331,
+  "rows": 799,
   "llm": {
-    "calls": 0,
-    "prompt_tokens": 0,
-    "completion_tokens": 0,
+    "calls": 358,
+    "prompt_tokens": 253195,
+    "completion_tokens": 15958,
     "errors": 0,
-    "by_model": {}
+    "by_model": {
+      "llama-3.1-8b-instant": {
+        "calls": 358,
+        "tokens": 269153
+      }
+    }
   },
-  "integrity": "0/8 rows had an LLM error (0.0%)",
+  "integrity": "8/799 rows had an LLM error (1.0%)",
   "figures": [
     "E:\\Thai GraphRAG + Benchmark - Temporal - Halal Ingredient GraphRAG\\results\\figures\\f1_by_hop.png",
     "E:\\Thai GraphRAG + Benchmark - Temporal - Halal Ingredient GraphRAG\\results\\figures\\retrieval_vs_answer.png",
+    "E:\\Thai GraphRAG + Benchmark - Temporal - Halal Ingredient GraphRAG\\results\\figures\\temporal_wrong_era.png",
+    "E:\\Thai GraphRAG + Benchmark - Temporal - Halal Ingredient GraphRAG\\results\\figures\\temporal_f1.png",
+    "E:\\Thai GraphRAG + Benchmark - Temporal - Halal Ingredient GraphRAG\\results\\figures\\ingredient_path_validity.png",
     "E:\\Thai GraphRAG + Benchmark - Temporal - Halal Ingredient GraphRAG\\results\\figures\\cost_latency.png"
   ]
 }

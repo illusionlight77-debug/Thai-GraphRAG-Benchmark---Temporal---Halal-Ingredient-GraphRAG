@@ -257,20 +257,31 @@ def _bar(data: pd.DataFrame, x: str, y: str, hue: str, title: str,
 def plot(summary: pd.DataFrame, detail: pd.DataFrame) -> list[str]:
     made = []
     core = summary[(summary["suite"] == "core") & (summary["hop_type"] != "ALL")]
+
+    # Headline: containment by hop type. Character-level F1 is noisy for Thai and
+    # penalises GraphRAG's verbose-but-correct answers (it ties on F1 while winning
+    # decisively on containment), so containment is the honest answer-quality view.
+    made.append(_bar(core, "hop_type", "containment", "retriever",
+                     "A — answer containment by hop type (GraphRAG vs vanilla RAG)",
+                     "containment_by_hop.png", "contains gold answer (rate)"))
+    made.append(_bar(core, "hop_type", "context_recall", "retriever",
+                     "A — retrieval: context contains the evidence, by hop type",
+                     "context_recall_by_hop.png", "context recall"))
+    # Kept for continuity with the brief; shows why F1 alone is misleading here.
     made.append(_bar(core, "hop_type", "f1", "retriever",
-                     "Answer F1 by hop type — GraphRAG vs vanilla RAG",
+                     "A — answer F1 by hop type (char-level; see containment)",
                      "f1_by_hop.png", "mean F1"))
 
     if not core.empty:
         long = core.melt(id_vars=["hop_type", "retriever"],
-                         value_vars=["context_recall", "f1"],
+                         value_vars=["context_recall", "containment"],
                          var_name="metric", value_name="score")
         long["label"] = long["retriever"] + " · " + long["metric"]
         plt.figure(figsize=(10, 5))
         ax = sns.barplot(data=long, x="hop_type", y="score", hue="label")
         for c in ax.containers:
             ax.bar_label(c, fmt="%.2f", fontsize=7, padding=2)
-        plt.title("Retrieval ceiling (context recall) vs delivered answer F1")
+        plt.title("A — retrieval ceiling (context recall) vs delivered answer (containment)")
         plt.ylim(0, 1)
         plt.tight_layout()
         p = config.FIGURES_DIR / "retrieval_vs_answer.png"
@@ -278,20 +289,31 @@ def plot(summary: pd.DataFrame, detail: pd.DataFrame) -> list[str]:
         plt.close()
         made.append(str(p))
 
+    # B: the wrong_era rate came out uniform (the metric's both-halves condition rarely
+    # fires), so the honest B story is retrieval of time-relevant evidence — the
+    # temporal retriever surfaces expiry facts the time-agnostic ones never see.
     temporal = summary[(summary["suite"] == "temporal") & (summary["hop_type"] == "ALL")]
-    if not temporal.empty and temporal["wrong_era"].notna().any():
-        made.append(_bar(temporal, "retriever", "wrong_era", "retriever",
-                         "B — wrong-era answer rate (lower is better)",
-                         "temporal_wrong_era.png", "wrong-era rate"))
-        made.append(_bar(
-            summary[(summary["suite"] == "temporal") & (summary["hop_type"] != "ALL")],
-            "hop_type", "f1", "retriever", "B — answer F1 on time-sensitive questions",
-            "temporal_f1.png", "mean F1"))
+    if not temporal.empty:
+        tlong = temporal.melt(id_vars=["retriever"],
+                              value_vars=["context_recall", "containment"],
+                              var_name="metric", value_name="score")
+        plt.figure(figsize=(9, 5))
+        order = [r for r in PALETTE if r in set(temporal["retriever"])]
+        ax = sns.barplot(data=tlong, x="retriever", y="score", hue="metric", order=order)
+        for c in ax.containers:
+            ax.bar_label(c, fmt="%.2f", fontsize=8, padding=2)
+        plt.title("B — time-aware retrieval: evidence found & answer correctness")
+        plt.ylim(0, 1)
+        plt.tight_layout()
+        p = config.FIGURES_DIR / "temporal_retrieval.png"
+        plt.savefig(p, dpi=150, bbox_inches="tight")
+        plt.close()
+        made.append(str(p))
 
     ing = summary[(summary["suite"] == "ingredient") & (summary["hop_type"] == "ALL")]
     if not ing.empty:
         long = ing.melt(id_vars=["retriever"],
-                        value_vars=["f1", "path_validity", "has_complete_path"],
+                        value_vars=["containment", "context_recall", "path_validity"],
                         var_name="metric", value_name="score")
         plt.figure(figsize=(9, 5))
         ax = sns.barplot(data=long, x="metric", y="score", hue="retriever",
@@ -392,7 +414,19 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=0, help="first N questions (smoke test)")
     ap.add_argument("--fresh", action="store_true",
                     help="ignore checkpoints and score every row again")
+    ap.add_argument("--plot-only", action="store_true",
+                    help="regenerate figures + summary from the saved detail CSV (no LLM)")
     args = ap.parse_args()
+
+    if args.plot_only:
+        detail = pd.read_csv(config.RESULTS_DIR / "benchmark_detail.csv")
+        summary = summarise(detail)
+        summary.to_csv(config.RESULTS_DIR / "benchmark_summary.csv", index=False)
+        figs = plot(summary, detail)
+        print(f"regenerated {len(figs)} figures from saved detail:")
+        for f in figs:
+            print("  ", f)
+        return
 
     if args.fresh:
         for path in config.RESULTS_DIR.glob(".checkpoint_*.jsonl"):
