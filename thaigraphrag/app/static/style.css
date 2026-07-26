@@ -200,6 +200,41 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .figure img { width: 100%; display: block; }
 .figure .cap { color: #334155; font-size: 12.5px; padding: 5px 4px 2px; }
 
+/* ── how-it-works diagrams ──────────────────────────────────────────── */
+
+.diagram { width: 100%; height: auto; display: block; }
+.diagram text { fill: var(--text); font-family: "Segoe UI", "Noto Sans Thai", sans-serif; }
+.diagram .lbl { font-size: 13px; }
+.diagram .lbl-sm { font-size: 11px; fill: var(--muted); }
+.diagram .lbl-b { font-size: 13px; font-weight: 650; }
+.dbox { rx: 8; }
+.dbox.core { fill: #16233f; stroke: var(--graphrag); }
+.dbox.van { fill: #1a2233; stroke: var(--vanilla); }
+.dbox.gr  { fill: #12233c; stroke: var(--graphrag); }
+.dbox.tmp { fill: #221a3a; stroke: var(--temporal); }
+.dbox.ing { fill: #0c2b22; stroke: var(--ingredient); }
+.dbox.store { fill: #1b2540; stroke: var(--border); }
+.dbox.neutral { fill: var(--panel-2); stroke: var(--border); }
+.darrow { stroke: var(--muted); stroke-width: 1.6; fill: none; marker-end: url(#dah); }
+.darrow.strong { stroke: var(--accent); stroke-width: 2; }
+
+.how-step { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+.how-step .n {
+  flex: 0 0 30px; height: 30px; border-radius: 50%; background: var(--accent);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px;
+}
+.how-step .n.van { background: var(--vanilla); }
+.how-step .n.tmp { background: var(--temporal); }
+.how-step .n.ing { background: var(--ingredient); }
+.how-step h4 { margin: 3px 0 3px; font-size: 14.5px; }
+.how-step p { margin: 0; font-size: 13.5px; color: var(--muted); }
+.how-step code { color: var(--text); }
+
+.legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12.5px; margin-top: 8px; }
+.legend .k { display: inline-flex; align-items: center; gap: 6px; }
+.legend .sw { width: 13px; height: 13px; border-radius: 3px; border: 1px solid var(--border); }
+
 @media (max-width: 720px) {
   main { padding: 16px 12px 50px; }
   header { padding: 12px 14px; }

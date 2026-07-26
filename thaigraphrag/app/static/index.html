@@ -25,6 +25,7 @@
   <button data-page="eval">5 · ชุดคำถาม</button>
   <button data-page="temporal">6 · Temporal (B)</button>
   <button data-page="ingredient">7 · Halal-Ingredient (C)</button>
+  <button data-page="how">📘 ระบบทำงานอย่างไร</button>
 </nav>
 
 <main>
@@ -251,6 +252,210 @@
       <p class="small muted">ส่วนผสมที่มีคำวินิจฉัยต่างกันตามแหล่งที่มาคือหัวใจของ Extension C —
         ถ้าไม่ระบุแหล่งที่มา ก็ตอบไม่ได้</p>
       <div class="table-wrap"><table id="ingTable"><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ─────────── 8. HOW IT WORKS ─────────── -->
+  <section class="page" id="page-how">
+    <h2>📘 ระบบทำงานอย่างไร</h2>
+    <p class="lead">ตั้งแต่คำถามภาษาไทยเข้าไปจนได้คำตอบ — ใช้อะไร ทำอะไร และ A / B / C ต่อกันอย่างไร
+      · ฉบับเต็มอ่านที่ <code>docs/HOW_IT_WORKS.md</code></p>
+
+    <!-- overview pipeline -->
+    <div class="card">
+      <h3>1 · ภาพรวม — เปลี่ยนแค่ "ตัวดึงข้อมูล" เท่านั้น</h3>
+      <p class="small">คำถามเดียวกันวิ่งผ่าน pipeline เดียวกัน ใช้ embedding · LLM · prompt เดียวกัน
+        ต่างกันแค่ <b>retriever</b> — ผลต่างของคะแนนจึงมาจากวิธีดึงข้อมูลล้วนๆ</p>
+      <svg class="diagram" viewBox="0 0 900 220" role="img" aria-label="pipeline">
+        <defs><marker id="dah1" markerWidth="9" markerHeight="9" refX="7" refY="3"
+          orient="auto"><path d="M0,0 L7,3 L0,6" fill="none" stroke="#93a3bd" stroke-width="1.4"/></marker></defs>
+        <rect class="dbox neutral" x="20" y="90" width="150" height="46" rx="8"/>
+        <text class="lbl" x="95" y="110" text-anchor="middle">❓ คำถามภาษาไทย</text>
+        <text class="lbl-sm" x="95" y="126" text-anchor="middle">เช่น "มัสยิด...อยู่ภาคใด"</text>
+
+        <rect class="dbox core" x="220" y="80" width="180" height="66" rx="8"/>
+        <text class="lbl-b" x="310" y="104" text-anchor="middle">pipeline/answer.py</text>
+        <text class="lbl-sm" x="310" y="122" text-anchor="middle">retrieve → ground</text>
+        <text class="lbl-sm" x="310" y="137" text-anchor="middle">⚠ ห้าม branch ตาม retriever</text>
+
+        <rect class="dbox gr" x="470" y="24" width="180" height="58" rx="8"/>
+        <text class="lbl-b" x="560" y="46" text-anchor="middle">🔀 RETRIEVER</text>
+        <text class="lbl-sm" x="560" y="64" text-anchor="middle">ตัวแปรเดียวที่เปลี่ยน</text>
+
+        <rect class="dbox neutral" x="470" y="140" width="180" height="58" rx="8"/>
+        <text class="lbl-b" x="560" y="162" text-anchor="middle">🧠 core/llm.py</text>
+        <text class="lbl-sm" x="560" y="180" text-anchor="middle">prompt+model+temp เดียวกัน</text>
+
+        <rect class="dbox neutral" x="710" y="80" width="170" height="66" rx="8"/>
+        <text class="lbl-b" x="795" y="104" text-anchor="middle">📄 RetrievedContext</text>
+        <text class="lbl-sm" x="795" y="122" text-anchor="middle">รูปแบบเดียวกัน</text>
+        <text class="lbl-sm" x="795" y="137" text-anchor="middle">ทุก retriever</text>
+
+        <path class="darrow" d="M170,113 L216,113"/>
+        <path class="darrow" d="M400,100 L466,58"/>
+        <path class="darrow" d="M400,126 L466,168"/>
+        <path class="darrow" d="M650,55 C690,60 700,90 710,105"/>
+        <path class="darrow" d="M710,120 C690,150 670,165 654,168"/>
+      </svg>
+    </div>
+
+    <!-- A: vanilla vs graphrag -->
+    <div class="card">
+      <h3>2 · A (แกน) — Vanilla RAG ต่างจาก GraphRAG อย่างไร</h3>
+      <p class="small">ตัวอย่างคำถาม multi-hop: <b>"ในจังหวัดเดียวกับมัสยิดกรือเซะ มีที่พักกี่แห่ง"</b></p>
+      <svg class="diagram" viewBox="0 0 900 300" role="img" aria-label="vanilla vs graphrag">
+        <defs><marker id="dah2" markerWidth="9" markerHeight="9" refX="7" refY="3"
+          orient="auto"><path d="M0,0 L7,3 L0,6" fill="none" stroke="#93a3bd" stroke-width="1.4"/></marker></defs>
+
+        <text class="lbl-b" x="225" y="24" text-anchor="middle" style="fill:var(--vanilla)">🔵 VANILLA — ค้นความคล้าย</text>
+        <rect class="dbox van" x="70" y="40" width="310" height="40" rx="8"/>
+        <text class="lbl" x="225" y="64" text-anchor="middle">embed(คำถาม) → เวกเตอร์ 1024 มิติ</text>
+        <rect class="dbox van" x="70" y="96" width="310" height="40" rx="8"/>
+        <text class="lbl" x="225" y="120" text-anchor="middle">ค้น Qdrant: โหนดข้อความคล้ายสุด top-5</text>
+        <rect class="dbox van" x="70" y="152" width="310" height="52" rx="8"/>
+        <text class="lbl" x="225" y="173" text-anchor="middle">ได้โหนดที่ "พูดถึงมัสยิด/ที่พัก"</text>
+        <text class="lbl-sm" x="225" y="190" text-anchor="middle">แต่ไม่รู้ว่าโหนดไหนเชื่อมกัน</text>
+        <rect class="dbox van" x="70" y="230" width="310" height="46" rx="8" style="fill:#3a1a1a;stroke:#7f1d1d"/>
+        <text class="lbl" x="225" y="257" text-anchor="middle" style="fill:#fca5a5">❌ LLM เดาจากรายการที่ไม่ต่อกัน</text>
+
+        <text class="lbl-b" x="675" y="24" text-anchor="middle" style="fill:var(--graphrag)">🟢 GRAPHRAG — เดินความสัมพันธ์</text>
+        <rect class="dbox gr" x="520" y="40" width="310" height="40" rx="8"/>
+        <text class="lbl" x="675" y="64" text-anchor="middle">entity-link → "มัสยิดกรือเซะ" (Attraction)</text>
+        <rect class="dbox gr" x="520" y="96" width="310" height="40" rx="8"/>
+        <text class="lbl" x="675" y="120" text-anchor="middle">เดิน: มัสยิด →LOCATED_IN→ ปัตตานี</text>
+        <rect class="dbox gr" x="520" y="152" width="310" height="52" rx="8"/>
+        <text class="lbl" x="675" y="173" text-anchor="middle">เดินต่อ: ปัตตานี ←LOCATED_IN← ที่พัก</text>
+        <text class="lbl-sm" x="675" y="190" text-anchor="middle">นับได้ = 16</text>
+        <rect class="dbox gr" x="520" y="230" width="310" height="46" rx="8" style="fill:#062e26;stroke:#065f46"/>
+        <text class="lbl" x="675" y="257" text-anchor="middle" style="fill:#6ee7b7">✅ ตอบ "16 แห่ง" จากที่เดินมาจริง</text>
+
+        <path class="darrow" d="M225,80 L225,94"/>
+        <path class="darrow" d="M225,136 L225,150"/>
+        <path class="darrow" d="M225,204 L225,228"/>
+        <path class="darrow" d="M675,80 L675,94"/>
+        <path class="darrow" d="M675,136 L675,150"/>
+        <path class="darrow" d="M675,204 L675,228"/>
+      </svg>
+      <p class="small muted" style="margin-bottom:0">Vanilla เก่งเมื่อคำตอบอยู่ในโหนดเดียวที่ข้อความคล้ายคำถาม
+        แต่คำถามที่ต้องเชื่อมสองโหนดผ่านโหนดที่สาม ไม่มีโหนดใดบรรจุคำตอบไว้ตรงๆ —
+        GraphRAG เดินตามเส้นความสัมพันธ์จริงจึงประกอบคำตอบได้</p>
+    </div>
+
+    <!-- GraphRAG internal steps -->
+    <div class="card">
+      <h3>3 · ข้างใน GraphRAG — 4 ขั้นตอน</h3>
+      <div class="how-step"><div class="n">1</div><div>
+        <h4>Entity Linking — คำถาม → seed nodes</h4>
+        <p>3 ชั้น: <b>gazetteer</b> (ชื่อจังหวัด/ภาค/หมวดที่ตรงเป๊ะ) → <b>fulltext</b>
+        (Neo4j index ตัวตัดคำ <code>thai</code>) → <b>n-gram + CONTAINS</b> (fallback)
+        ให้คะแนนด้วย Dice · <b>ไม่แตะ Qdrant</b> เพื่อไม่ให้กลายเป็น "vanilla + graph"</p>
+      </div></div>
+      <div class="how-step"><div class="n">2</div><div>
+        <h4>Seed card — บรรยายโหนดตั้งต้น</h4>
+        <p>ดึงข้อความของ seed nodes มาตรงๆ — พอสำหรับคำถาม single-hop</p>
+      </div></div>
+      <div class="how-step"><div class="n">3</div><div>
+        <h4>Aggregated neighbourhood — สรุปเพื่อนบ้าน (ไม่ไล่ทุก path)</h4>
+        <p>นับ + ตัวอย่าง ต่อ (ชนิดความสัมพันธ์ × ชนิดโหนดปลาย) ที่ฐานข้อมูล เช่น
+        "(ปัตตานี) ← ที่พัก จำนวน 16: ..." · โหนด hub อย่างกรุงเทพฯ (เพื่อนบ้าน 3,746)
+        จึงไม่ระเบิดเป็นล้าน path แล้วค้าง</p>
+      </div></div>
+      <div class="how-step"><div class="n">4</div><div>
+        <h4>Bridge paths — เส้นทางเชื่อมระหว่าง seed</h4>
+        <p><code>shortestPath</code> ระหว่างคู่ seed → หลักฐาน multi-hop โดยตรง ·
+        ทั้งหมด linearise เป็นข้อเท็จจริงไทย จำกัดที่ <code>MAX_TRIPLES=60</code></p>
+      </div></div>
+    </div>
+
+    <!-- B and C -->
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>4 · B (Temporal) — ตอบตามเวลา</h3>
+        <p class="small"><b>สืบทอด GraphRAG ของ A</b> แล้วกรองทุกความสัมพันธ์ด้วยช่วงเวลา</p>
+        <svg class="diagram" viewBox="0 0 440 210" role="img" aria-label="temporal">
+          <defs><marker id="dah3" markerWidth="9" markerHeight="9" refX="7" refY="3"
+            orient="auto"><path d="M0,0 L7,3 L0,6" fill="none" stroke="#93a3bd" stroke-width="1.4"/></marker></defs>
+          <rect class="dbox store" x="20" y="16" width="400" height="46" rx="8"/>
+          <text class="lbl" x="220" y="36" text-anchor="middle">product_processed.csv · expire_date จริง 100%</text>
+          <text class="lbl-sm" x="220" y="52" text-anchor="middle">(:Product)-[:CERTIFIED_HALAL {valid_to}]->(:Certifier)</text>
+          <rect class="dbox tmp" x="20" y="78" width="400" height="48" rx="8"/>
+          <text class="lbl" x="220" y="99" text-anchor="middle">กรอง: valid_from ≤ as_of ≤ valid_to</text>
+          <text class="lbl-sm" x="220" y="115" text-anchor="middle">NULL = ไม่จำกัด → ความสัมพันธ์ไร้เวลาผ่านเสมอ</text>
+          <rect class="dbox tmp" x="20" y="142" width="400" height="52" rx="8"/>
+          <text class="lbl" x="220" y="164" text-anchor="middle">ณ ปี 2570 → 53% หมดอายุแล้ว</text>
+          <text class="lbl-sm" x="220" y="181" text-anchor="middle">วัด % ตอบผิดยุค (wrong_era) ที่ลดลง</text>
+          <path class="darrow" d="M220,62 L220,76"/>
+          <path class="darrow" d="M220,126 L220,140"/>
+        </svg>
+        <p class="small muted" style="margin-bottom:0">เปิด B ไม่ทำให้เสียข้อเท็จจริงไร้เวลา
+          แค่ตัดข้อความที่ไม่จริงในปีนั้นออก</p>
+      </div>
+
+      <div class="card">
+        <h3>5 · C (Halal-Ingredient) — อธิบายเส้นทาง</h3>
+        <p class="small">คำวินิจฉัยเป็นสมบัติของ <b>คู่ (ส่วนผสม, แหล่งที่มา)</b> ไม่ใช่ของส่วนผสมเดี่ยว</p>
+        <svg class="diagram" viewBox="0 0 440 210" role="img" aria-label="ingredient">
+          <defs><marker id="dah4" markerWidth="9" markerHeight="9" refX="7" refY="3"
+            orient="auto"><path d="M0,0 L7,3 L0,6" fill="none" stroke="#93a3bd" stroke-width="1.4"/></marker></defs>
+          <rect class="dbox ing" x="150" y="16" width="140" height="40" rx="8"/>
+          <text class="lbl" x="220" y="40" text-anchor="middle">เจลาติน</text>
+          <rect class="dbox store" x="20" y="90" width="120" height="40" rx="8"/>
+          <text class="lbl" x="80" y="114" text-anchor="middle">หมู</text>
+          <rect class="dbox store" x="300" y="90" width="120" height="40" rx="8"/>
+          <text class="lbl" x="360" y="114" text-anchor="middle">ปลา</text>
+          <rect class="dbox ing" x="20" y="158" width="120" height="40" rx="8" style="fill:#3a1a1a;stroke:#7f1d1d"/>
+          <text class="lbl" x="80" y="182" text-anchor="middle" style="fill:#fca5a5">หะรอม</text>
+          <rect class="dbox ing" x="300" y="158" width="120" height="40" rx="8" style="fill:#062e26;stroke:#065f46"/>
+          <text class="lbl" x="360" y="182" text-anchor="middle" style="fill:#6ee7b7">ฮาลาล</text>
+          <path class="darrow" d="M195,56 L100,88"/>
+          <path class="darrow" d="M245,56 L340,88"/>
+          <path class="darrow" d="M80,130 L80,156"/>
+          <path class="darrow" d="M360,130 L360,156"/>
+          <text class="lbl-sm" x="128" y="78">DERIVED_FROM</text>
+          <text class="lbl-sm" x="270" y="78">DERIVED_FROM</text>
+        </svg>
+        <p class="small muted" style="margin-bottom:0">ถามลอยๆ "เจลาตินฮาลาลไหม" คำตอบที่ถูกคือ
+          <b>"ขึ้นกับแหล่งที่มา"</b> — ระบบ flat จะเลือกคำตอบเดียวมาตอบเป็นข้อเท็จจริง ซึ่งผิด</p>
+      </div>
+    </div>
+
+    <!-- A/B/C composition -->
+    <div class="card">
+      <h3>6 · A / B / C ประกอบกันอย่างไร</h3>
+      <p class="small">B และ C เสียบผ่าน <code>get_retriever()</code> และเพิ่มตัวเองเข้า benchmark —
+        <b>ไม่มีไฟล์ใน core ถูกแก้</b> · ลบ extension ทิ้ง แกน A ยังรันได้ปกติ</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>ใช้ทำอะไร</th><th>ทำอะไรได้</th><th>ชุดคำถาม</th><th>เมตริกหลัก</th></tr></thead>
+        <tbody>
+          <tr><td><span class="pill on">A core</span></td><td>เทียบ GraphRAG vs vanilla</td>
+            <td>ตอบคำถามกราฟ single/multi/relational</td><td class="mono">thai_eval.jsonl</td><td>F1 แยกตาม hop</td></tr>
+          <tr><td><span class="pill" style="background:#221a3a;color:#c4b5fd;border-color:#7c3aed">B temporal</span></td>
+            <td>ตอบตามเวลา</td><td>"ณ ปีไหน...", กันตอบผิดยุค</td><td class="mono">temporal_eval.jsonl</td><td>% ลด wrong_era</td></tr>
+          <tr><td><span class="pill halal">C ingredient</span></td>
+            <td>อธิบายเส้นทาง</td><td>ส่วนผสม→ที่มา→คำวินิจฉัย ที่ตรวจได้</td><td class="mono">ingredient_eval.jsonl</td><td>correctness + path validity</td></tr>
+        </tbody>
+      </table></div>
+      <div class="legend">
+        <span class="k"><span class="sw" style="background:#16233f;border-color:#3b82f6"></span> core (A)</span>
+        <span class="k"><span class="sw" style="background:#221a3a;border-color:#7c3aed"></span> temporal (B)</span>
+        <span class="k"><span class="sw" style="background:#0c2b22;border-color:#34d399"></span> ingredient (C)</span>
+      </div>
+    </div>
+
+    <!-- component reference -->
+    <div class="card">
+      <h3>7 · ส่วนประกอบ — ใช้อะไร ทำอะไร</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>ส่วน</th><th>เทคโนโลยี</th><th>หน้าที่</th></tr></thead>
+        <tbody>
+          <tr><td>Knowledge Graph</td><td class="mono">Neo4j</td><td>แหล่งความจริงเดียวของกราฟ (โหนด + ความสัมพันธ์มีชนิด)</td></tr>
+          <tr><td>Vector store</td><td class="mono">Qdrant</td><td>เวกเตอร์ข้อความโหนด — สำหรับ baseline vanilla เท่านั้น</td></tr>
+          <tr><td>Embeddings</td><td class="mono">bge-m3 / TEI</td><td>ข้อความไทย → เวกเตอร์ 1024 มิติ (local)</td></tr>
+          <tr><td>LLM</td><td class="mono">Groq llama-3.1</td><td>สรุปคำตอบจาก context + ตัดสิน faithfulness</td></tr>
+          <tr><td>Entity linking</td><td class="mono">entity_linking.py</td><td>คำถาม → seed nodes (gazetteer→fulltext→n-gram)</td></tr>
+          <tr><td>Pipeline</td><td class="mono">answer.py</td><td>retrieve → ground · จุดบังคับความยุติธรรม</td></tr>
+        </tbody>
+      </table></div>
     </div>
   </section>
 

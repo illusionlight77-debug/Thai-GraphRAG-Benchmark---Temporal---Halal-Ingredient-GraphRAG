@@ -77,7 +77,10 @@
 นอกจากนี้ยังจำกัดความยาว context (`MAX_TRIPLES` ค่าเริ่มต้น 60 ข้อเท็จจริง) ด้วยเหตุผลเดียวกัน:
 ถ้าปล่อยให้ GraphRAG เทกราฟทั้งก้อนลง prompt มันจะชนะเพราะ **งบ token** ไม่ใช่เพราะโครงสร้าง
 
-รายละเอียดเต็ม: [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md)
+รายละเอียดเต็ม: [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md) (เหตุผลเชิงทดลอง) ·
+**[`docs/HOW_IT_WORKS.md`](docs/HOW_IT_WORKS.md) (ระบบทำงานอย่างไร — มีไดอะแกรมอธิบายทีละขั้น
+ว่า vanilla ต่างจาก GraphRAG ยังไง, GraphRAG มี 4 ขั้นอะไรบ้าง, และ A/B/C ต่อกันอย่างไร)**
+หรือเปิดหน้า **"📘 ระบบทำงานอย่างไร"** ใน UI เพื่อดูไดอะแกรมแบบภาพ
 
 ---
 
@@ -169,6 +172,7 @@ uvicorn thaigraphrag.app.main:app --port 8000
 | http://localhost:8000/#eval | 5 · ดู/แก้ชุดคำถาม |
 | http://localhost:8000/#temporal | 6 · Temporal (B) — เลือกปี พ.ศ. |
 | http://localhost:8000/#ingredient | 7 · Halal-Ingredient (C) — เส้นทางคำวินิจฉัย |
+| http://localhost:8000/#how | 📘 ระบบทำงานอย่างไร — ไดอะแกรมอธิบายทั้งระบบ |
 | http://localhost:8000/docs | **Swagger** (OpenAPI) |
 | http://localhost:8000/health | สถานะ dependency ทั้งหมด |
 | http://localhost:8000/api/stats | ตัวเลขกราฟ/เวกเตอร์/ชุดคำถาม (JSON) |

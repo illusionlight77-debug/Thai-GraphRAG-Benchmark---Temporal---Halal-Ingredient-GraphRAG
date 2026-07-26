@@ -95,15 +95,21 @@ services:
       embeddings:
         condition: service_started   # not _healthy: the 2GB download must not block boot
     restart: unless-stopped
+    # Bootstrap runs in the BACKGROUND (&) so uvicorn starts serving immediately.
+    # Running it in the foreground blocks the server for the entire first-boot KG
+    # build + benchmark (hours), during which http://localhost:8000 refuses every
+    # connection — which looks exactly like a broken container. The UI now comes up
+    # at once; the Overview page shows the node/vector counts rising as bootstrap
+    # fills the graph. Set SKIP_BOOTSTRAP=1 once the volumes are populated.
     command: >
-      sh -c "python -m scripts.bootstrap;
-             uvicorn thaigraphrag.app.main:app --host 0.0.0.0 --port 8000"
+      sh -c "python -m scripts.bootstrap &
+             exec uvicorn thaigraphrag.app.main:app --host 0.0.0.0 --port 8000"
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://localhost:8000/health >/dev/null || exit 1"]
       interval: 20s
       timeout: 5s
       retries: 30
-      start_period: 120s
+      start_period: 90s
 
 volumes:
   neo4j_data:

@@ -93,9 +93,18 @@ class RateLimiter:
                     return
 
 
+# Reserving the full `max_tokens` for every call wastes most of the budget: the
+# answers here are short factual sentences (measured: 15-80 completion tokens) while
+# max_tokens is 512, so a run reserves ~3x the tokens it actually spends and crawls at
+# a third of the allowed rate. Reserve a realistic completion instead — `correct()`
+# trues the window up with the real usage as soon as the response lands, and the 429
+# path still covers the occasional underestimate safely.
+_COMPLETION_RESERVE = 96
+
+
 def _estimate_tokens(system: str, user: str, max_tokens: int) -> int:
-    """Rough upper bound. Thai is ~2-3 chars/token for bge/llama tokenisers."""
-    return int((len(system) + len(user)) / 2.5) + max_tokens + 16
+    """Rough prompt cost. Thai is ~2-3 chars/token for llama-family tokenisers."""
+    return int((len(system) + len(user)) / 2.5) + min(max_tokens, _COMPLETION_RESERVE) + 16
 
 
 @lru_cache

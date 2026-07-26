@@ -580,6 +580,6 @@ async function loadIngredients() {
 /* ── boot ────────────────────────────────────────────────────────────── */
 
 const start = (location.hash || "#overview").slice(1);
-show(["overview", "ask", "kg", "benchmark", "eval", "temporal", "ingredient"]
+show(["overview", "ask", "kg", "benchmark", "eval", "temporal", "ingredient", "how"]
   .includes(start) ? start : "overview");
 if (!loaded.overview) { loaded.overview = true; loaders.overview(); }

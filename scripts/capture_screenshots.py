@@ -30,6 +30,7 @@ PAGES = [
     ("05-eval-set.png", "5 · ชุดคำถาม", "Eval Set — browse and edit the released question sets"),
     ("06-temporal.png", "6 · Temporal (B)", "Temporal — the same question answered as of different years"),
     ("07-ingredient.png", "7 · Halal-Ingredient (C)", "Halal-Ingredient — the ruling path, drawn"),
+    ("08-how-it-works.png", "ระบบทำงานอย่างไร", "How it works — vanilla vs GraphRAG, the 4 steps, and how A/B/C compose"),
 ]
 
 ASK_QUESTION = "มัสยิดกลางปัตตานีอยู่ในภาคใดของประเทศไทย"
