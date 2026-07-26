@@ -38,3 +38,6 @@ results/benchmark_run.log
 Thumbs.db
 .vscode/
 .idea/
+
+# Claude Code kickoff prompt — local only, not published
+KICKOFF_CLAUDE_CODE.md
