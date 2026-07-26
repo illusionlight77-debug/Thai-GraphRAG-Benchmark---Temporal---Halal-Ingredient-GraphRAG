@@ -41,3 +41,6 @@ Thumbs.db
 
 # Claude Code kickoff prompt — local only, not published
 KICKOFF_CLAUDE_CODE.md
+
+# Claude Code project instructions — local only, not published
+CLAUDE.md
